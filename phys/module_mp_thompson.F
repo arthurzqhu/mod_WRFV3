@@ -1430,6 +1430,7 @@
 
       REAL, DIMENSION(kts:kte):: temp, pres, qv
       REAL, DIMENSION(kts:kte):: rc, ri, rr, rs, rg, ni, nr, nc, nwfa, nifa
+      real, dimension(kts:kte):: LAF ! local activation fraction=nc/Nt_c
       REAL, DIMENSION(kts:kte):: rho, rhof, rhof2
       REAL, DIMENSION(kts:kte):: qvs, qvsi, delQvs
       REAL, DIMENSION(kts:kte):: satw, sati, ssatw, ssati
@@ -1478,7 +1479,6 @@
       LOGICAL:: debug_flag
       CHARACTER*256:: mp_debug
       INTEGER:: nu_c
-
 !+---+
 
       debug_flag = .false.
