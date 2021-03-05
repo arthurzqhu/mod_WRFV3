@@ -42,3 +42,5 @@ rsl.*
 mpi_job.*
 *.nc
 freezeH2O.dat
+.vscode/*
+.DS_store
