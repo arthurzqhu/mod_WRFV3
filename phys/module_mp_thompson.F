@@ -1620,10 +1620,12 @@
          rho(k) = 0.622*pres(k)/(R*temp(k)*(qv(k)+0.622))
          nwfa(k) = MAX(11.1E6, MIN(9999.E6, nwfa1d(k)*rho(k)))
          nifa(k) = MAX(naIN1*0.01, MIN(9999.E6, nifa1d(k)*rho(k)))
+         LAF(k) = nc(k)/Nt_c
 
          if (qc1d(k) .gt. R1) then
             no_micro = .false.
             rc(k) = qc1d(k)*rho(k)
+            print*, rc(k)
             nc(k) = MAX(2., nc1d(k)*rho(k))
             L_qc(k) = .true.
             nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
@@ -1719,6 +1721,7 @@
             L_qg(k) = .false.
          endif
       enddo
+      stop
 
 !+---+-----------------------------------------------------------------+
 !     if (debug_flag) then
