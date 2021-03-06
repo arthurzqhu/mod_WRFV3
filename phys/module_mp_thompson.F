@@ -1003,20 +1003,19 @@
 !..calculating relative dispersion in stratocumulus
 !+---+-----------------------------------------------------------------+
 
-      subroutine getNUinSc(nu_c, nc, rc, Nt_c, zm_level, &
-                           k, kts, kte, kds, kde)
+      subroutine getNUinSc(nu_c, nc, rc, Nt_c, zm_level, k, kts, kte)
       implicit none
 
       integer, intent(out):: nu_c
       real, intent(in):: nc, Nt_c
-      INTEGER, INTENT(IN):: k, kts, kte, kds, kde
-      
-      real, dimension(kts:kte):: rc
+      INTEGER, INTENT(IN):: k, kts, kte
+      real, dimension(:), intent(in):: zm_level ! physical level of each vertical grid. bad coding practice but couldnt find the proper variable to use so it's specified here. 
 
+      real, dimension(kts:kte):: rc
       real:: reldisp ! relative dispersion, related to nu_c
       real:: LAF ! local activation fraction=nc/Nt_c
       real:: NH ! normalized height in a cloud
-      real, dimension(kds:kde):: zm_level ! physical level of each vertical grid. bad coding practice but couldnt find the proper variable to use so it's specified here. 
+      
       integer, dimension(kts:kte):: cloud_or_not ! -1/1 array of whether a level has enough liquid water to be considered cloud
       integer:: idx_cb, idx_ct  ! level index for cloud base and cloud top
       real:: cloud_threshold ! threshold to be considered as cloud (kg/kg)
@@ -1027,10 +1026,10 @@
       else
          if (kts<=1) then ! not sure if it's 0-index or 1-index
             if (any(rc(kts:kts+9) .gt. cloud_threshold)) then ! make sure it's within the boundary layer
-               cloud_or_not = sign(1, rc-cloud_threshold)
-               cloud_or_not(kts+10:kte)=-1 ! dont care about whether there's cloud above the boundary layer
-               idx_cb = findloc(cloud_or_not,1)
-               idx_ct = findloc(cloud_or_not,1, back= .true.)
+               cloud_or_not = sign(1., rc-cloud_threshold)
+               cloud_or_not(kts+10:kte)=-1. ! dont care about whether there's cloud above the boundary layer
+               idx_cb = findloc(cloud_or_not,1.)
+               idx_ct = findloc(cloud_or_not,1., back= .true.)
             endif
       
             LAF = nc/Nt_c
@@ -1686,8 +1685,7 @@
             nc(k) = MAX(2., nc1d(k)*rho(k))
             L_qc(k) = .true.
             ! nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
-            call getNUinSc(nu_c, nc(k), rc, Nt_c, zm_level, &
-                           k, kts, kte, kds, kde)
+            call getNUinSc(nu_c, nc(k), rc, Nt_c, zm_level, k, kts, kte)
             lamc = (nc(k)*am_r*ccg(2,nu_c)*ocg1(nu_c)/rc(k))**obmr
             xDc = (bm_r + nu_c + 1.) / lamc
             if (xDc.lt. D0c) then
@@ -1988,8 +1986,7 @@
          mvd_c(k) = D0c
          if (L_qc(k)) then
          !  nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
-            call getNUinSc(nu_c, nc(k), rc, Nt_c, zm_level, &
-                           k, kts, kte, kds, kde)
+            call getNUinSc(nu_c, nc(k), rc, Nt_c, zm_level, k, kts, kte)
             xDc = MAX(D0c*1.E6, ((rc(k)/(am_r*nc(k)))**obmr) * 1.E6)
             lamc = (nc(k)*am_r* ccg(2,nu_c) * ocg1(nu_c) / rc(k))**obmr
             mvd_c(k) = (3.0+nu_c+0.672) / lamc
@@ -2730,8 +2727,7 @@
          xnc=MAX(2., (nc1d(k) + ncten(k)*dtsave)*rho(k))
          if (xrc .gt. R1) then
          !  nu_c = MIN(15, NINT(1000.E6/xnc) + 2)
-            call getNUinSc(nu_c, xnc, rc, Nt_c, zm_level, &
-                           k, kts, kte, kds, kde)
+            call getNUinSc(nu_c, xnc, rc, Nt_c, zm_level, k, kts, kte)
           lamc = (xnc*am_r*ccg(2,nu_c)*ocg1(nu_c)/rc(k))**obmr
           xDc = (bm_r + nu_c + 1.) / lamc
           if (xDc.lt. D0c) then
@@ -3304,8 +3300,7 @@
          vtc = 0.
          if (rc(k) .gt. R1 .and. w1d(k) .lt. 1.E-1) then
          !  nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
-            call getNUinSc(nu_c, nc(k), rc, Nt_c, zm_level, &
-                           k, kts, kte, kds, kde)
+            call getNUinSc(nu_c, nc(k), rc, Nt_c, zm_level, k, kts, kte)
           lamc = (nc(k)*am_r*ccg(2,nu_c)*ocg1(nu_c)/rc(k))**obmr
           ilamc = 1./lamc
           vtc = rhof(k)*av_c*ccg(5,nu_c)*ocg2(nu_c) * ilamc**bv_c
@@ -3594,8 +3589,7 @@
            nc1d(k) = 0.0
          else
          !   nu_c = MIN(15, NINT(1000.E6/(nc1d(k)*rho(k))) + 2)
-           call getNUinSc(nu_c, nc1d(k)*rho(k), rc, Nt_c, zm_level, &
-                           k, kts, kte, kds, kde)
+           call getNUinSc(nu_c, nc1d(k)*rho(k), rc, Nt_c, zm_level, k, kts, kte)
            lamc = (am_r*ccg(2,nu_c)*ocg1(nu_c)*nc1d(k)/qc1d(k))**obmr
            xDc = (bm_r + nu_c + 1.) / lamc
            if (xDc.lt. D0c) then
