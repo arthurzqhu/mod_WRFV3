@@ -1,6 +1,6 @@
  &TIME_CONTROL
  RUN_DAYS        =           0,
- RUN_HOURS       =           1,
+ RUN_HOURS       =           5,
  RUN_MINUTES     =           0,
  RUN_SECONDS     =           0,
  START_YEAR      = 3*2005, 8*1993,

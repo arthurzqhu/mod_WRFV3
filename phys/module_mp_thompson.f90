@@ -1395,6 +1395,7 @@
 
       REAL, DIMENSION(kts:kte):: temp, pres, qv
       REAL, DIMENSION(kts:kte):: rc, ri, rr, rs, rg, ni, nr, nc, nwfa, nifa
+      real, dimension(kts:kte):: LAF 
       REAL, DIMENSION(kts:kte):: rho, rhof, rhof2
       REAL, DIMENSION(kts:kte):: qvs, qvsi, delQvs
       REAL, DIMENSION(kts:kte):: satw, sati, ssatw, ssati
@@ -1443,7 +1444,6 @@
       LOGICAL:: debug_flag
       CHARACTER*256:: mp_debug
       INTEGER:: nu_c
-
 
 
       debug_flag = .false.
@@ -1579,10 +1579,11 @@
          rho(k) = 0.622*pres(k)/(R*temp(k)*(qv(k)+0.622))
          nwfa(k) = MAX(11.1E6, MIN(9999.E6, nwfa1d(k)*rho(k)))
          nifa(k) = MAX(naIN1*0.01, MIN(9999.E6, nifa1d(k)*rho(k)))
+         LAF(k) = nc(k)/Nt_c
 
          if (qc1d(k) .gt. R1) then
             no_micro = .false.
-            rc(k) = qc1d(k)*rho(k)
+            rc(k) = qc1d(k)*rho(k) 
             nc(k) = MAX(2., nc1d(k)*rho(k))
             L_qc(k) = .true.
             nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
@@ -1678,6 +1679,8 @@
             L_qg(k) = .false.
          endif
       enddo
+      if (any(rc .gt. 1.e-5)) print*, maxloc(rc), maxval(rc)
+      
 
 
 
@@ -2957,12 +2960,8 @@
            if (clap .gt. eps) then
             if (is_aerosol_aware) then
                xnc = MAX(2., activ_ncloud(temp(k), w1d(k), nwfa(k)))
-               print*, 'aerosol aware'
-               stop
             else
                xnc = Nt_c
-               print*, 'unaware'
-               stop
             endif
             pnc_wcd(k) = 0.5*(xnc-nc(k) + abs(xnc-nc(k)))*odts*orho
 
@@ -3571,13 +3570,13 @@
             INQUIRE(63,opened=lopen)
             IF (lopen) THEN
               IF( force_read_thompson ) THEN
-                CALL wrf_error_fatal3("<stdin>",3574,&
+                CALL wrf_error_fatal3("<stdin>",3573,&
 "Error reading qr_acr_qg.dat. Aborting because force_read_thompson is .true.")
               ENDIF
               CLOSE(63)
             ELSE
               IF( force_read_thompson ) THEN
-                CALL wrf_error_fatal3("<stdin>",3580,&
+                CALL wrf_error_fatal3("<stdin>",3579,&
 "Error opening qr_acr_qg.dat. Aborting because force_read_thompson is .true.")
               ENDIF
             ENDIF
@@ -3589,7 +3588,7 @@
           ENDIF
         ELSE
           IF( force_read_thompson ) THEN
-            CALL wrf_error_fatal3("<stdin>",3592,&
+            CALL wrf_error_fatal3("<stdin>",3591,&
 "Non-existent qr_acr_qg.dat. Aborting because force_read_thompson is .true.")
           ENDIF
         ENDIF
@@ -3701,7 +3700,7 @@
           CLOSE(63)
           RETURN    
  9234     CONTINUE
-          CALL wrf_error_fatal3("<stdin>",3704,&
+          CALL wrf_error_fatal3("<stdin>",3703,&
 "Error writing qr_acr_qg.dat")
         ENDIF
       ENDIF
@@ -3761,13 +3760,13 @@
             INQUIRE(63,opened=lopen)
             IF (lopen) THEN
               IF( force_read_thompson ) THEN
-                CALL wrf_error_fatal3("<stdin>",3764,&
+                CALL wrf_error_fatal3("<stdin>",3763,&
 "Error reading qr_acr_qs.dat. Aborting because force_read_thompson is .true.")
               ENDIF
               CLOSE(63)
             ELSE
               IF( force_read_thompson ) THEN
-                CALL wrf_error_fatal3("<stdin>",3770,&
+                CALL wrf_error_fatal3("<stdin>",3769,&
 "Error opening qr_acr_qs.dat. Aborting because force_read_thompson is .true.")
               ENDIF
             ENDIF
@@ -3779,7 +3778,7 @@
           ENDIF
         ELSE
           IF( force_read_thompson ) THEN
-            CALL wrf_error_fatal3("<stdin>",3782,&
+            CALL wrf_error_fatal3("<stdin>",3781,&
 "Non-existent qr_acr_qs.dat. Aborting because force_read_thompson is .true.")
           ENDIF
         ENDIF
@@ -3979,7 +3978,7 @@
           CLOSE(63)
           RETURN    
  9234     CONTINUE
-          CALL wrf_error_fatal3("<stdin>",3982,&
+          CALL wrf_error_fatal3("<stdin>",3981,&
 "Error writing qr_acr_qs.dat")
         ENDIF
       ENDIF
@@ -4033,13 +4032,13 @@
             INQUIRE(63,opened=lopen)
             IF (lopen) THEN
               IF( force_read_thompson ) THEN
-                CALL wrf_error_fatal3("<stdin>",4036,&
+                CALL wrf_error_fatal3("<stdin>",4035,&
 "Error reading freezeH2O.dat. Aborting because force_read_thompson is .true.")
               ENDIF
               CLOSE(63)
             ELSE
               IF( force_read_thompson ) THEN
-                CALL wrf_error_fatal3("<stdin>",4042,&
+                CALL wrf_error_fatal3("<stdin>",4041,&
 "Error opening freezeH2O.dat. Aborting because force_read_thompson is .true.")
               ENDIF
             ENDIF
@@ -4051,7 +4050,7 @@
           ENDIF
         ELSE
           IF( force_read_thompson ) THEN
-            CALL wrf_error_fatal3("<stdin>",4054,&
+            CALL wrf_error_fatal3("<stdin>",4053,&
 "Non-existent freezeH2O.dat. Aborting because force_read_thompson is .true.")
           ENDIF
         ENDIF
@@ -4147,7 +4146,7 @@
           CLOSE(63)
           RETURN    
  9234     CONTINUE
-          CALL wrf_error_fatal3("<stdin>",4150,&
+          CALL wrf_error_fatal3("<stdin>",4149,&
 "Error writing freezeH2O.dat")
         ENDIF
       ENDIF
@@ -4496,7 +4495,7 @@
       ENDIF
       CALL wrf_dm_bcast_bytes ( iunit_mp_th1 , 4 )
       IF ( iunit_mp_th1 < 0 ) THEN
-        CALL wrf_error_fatal3("<stdin>",4499,&
+        CALL wrf_error_fatal3("<stdin>",4498,&
 'module_mp_thompson: table_ccnAct: '//   &
            'Can not find unused fortran unit to read in lookup table.')
       ENDIF
@@ -4516,12 +4515,12 @@
       RETURN
  9009 CONTINUE
       WRITE( errmess , '(A,I2)' ) 'module_mp_thompson: error opening CCN_ACTIVATE.BIN on unit ',iunit_mp_th1
-      CALL wrf_error_fatal3("<stdin>",4519,&
+      CALL wrf_error_fatal3("<stdin>",4518,&
 errmess)
       RETURN
  9010 CONTINUE
       WRITE( errmess , '(A,I2)' ) 'module_mp_thompson: error reading CCN_ACTIVATE.BIN on unit ',iunit_mp_th1
-      CALL wrf_error_fatal3("<stdin>",4524,&
+      CALL wrf_error_fatal3("<stdin>",4523,&
 errmess)
 
       end subroutine table_ccnAct

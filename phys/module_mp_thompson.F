@@ -1624,8 +1624,7 @@
 
          if (qc1d(k) .gt. R1) then
             no_micro = .false.
-            rc(k) = qc1d(k)*rho(k)
-            print*, rc(k)
+            rc(k) = qc1d(k)*rho(k) 
             nc(k) = MAX(2., nc1d(k)*rho(k))
             L_qc(k) = .true.
             nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
@@ -1721,7 +1720,8 @@
             L_qg(k) = .false.
          endif
       enddo
-      stop
+      if (any(rc .gt. 1.e-5)) print*, maxloc(rc), maxval(rc)
+      !if (any((qc1d(k) .gt. R1))) stop
 
 !+---+-----------------------------------------------------------------+
 !     if (debug_flag) then
