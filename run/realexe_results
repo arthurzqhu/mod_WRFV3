@@ -1,0 +1,800 @@
+taskid: 0 hostname: r1i4n14
+ Ntasks in X            1 , ntasks in Y            1
+--- WARNING: traj_opt is zero, but num_traj is not zero; setting num_traj to zero.
+--- NOTE: sst_update is 0, setting io_form_auxinput4 = 0 and auxinput4_interval = 0 for all domains
+--- NOTE: sst_update is 0, setting io_form_auxinput4 = 0 and auxinput4_interval = 0 for all domains
+--- NOTE: sst_update is 0, setting io_form_auxinput4 = 0 and auxinput4_interval = 0 for all domains
+--- NOTE: both grid_sfdda and pxlsm_soil_nudge are 0 for domain      1, setting sgfdda interval and ending time to 0 for that domain.
+--- NOTE: obs_nudge_opt is 0 for domain      1, setting obs nudging interval and ending time to 0 for that domain.
+--- NOTE: grid_fdda is 0 for domain      2, setting gfdda interval and ending time to 0 for that domain.
+--- NOTE: both grid_sfdda and pxlsm_soil_nudge are 0 for domain      2, setting sgfdda interval and ending time to 0 for that domain.
+--- NOTE: obs_nudge_opt is 0 for domain      2, setting obs nudging interval and ending time to 0 for that domain.
+--- NOTE: grid_fdda is 0 for domain      3, setting gfdda interval and ending time to 0 for that domain.
+--- NOTE: both grid_sfdda and pxlsm_soil_nudge are 0 for domain      3, setting sgfdda interval and ending time to 0 for that domain.
+--- NOTE: obs_nudge_opt is 0 for domain      3, setting obs nudging interval and ending time to 0 for that domain.
+--- NOTE: bl_pbl_physics /= 4, implies mfshconv must be 0, resetting
+Need MYNN PBL for icloud_bl = 1, resetting to 0
+*************************************
+No physics suite selected.
+Physics options will be used directly from the namelist.
+*************************************
+--- NOTE: RRTMG radiation is in use, setting:  levsiz=59, alevsiz=12, no_src_types=6
+--- NOTE: num_soil_layers has been set to      4
+REAL_EM V3.9.1.1 PREPROCESSOR
+ *************************************
+ Parent domain
+ ids,ide,jds,jde            1         121           1         121
+ ims,ime,jms,jme           -4         126          -4         126
+ ips,ipe,jps,jpe            1         121           1         121
+ *************************************
+DYNAMICS OPTION: Eulerian Mass Coordinate
+   alloc_space_field: domain            1 ,              839741444  bytes allocated
+Time period #   1 to process = 2005-07-12_00:00:00.
+Time period #   2 to process = 2005-07-12_06:00:00.
+Time period #   3 to process = 2005-07-12_12:00:00.
+Time period #   4 to process = 2005-07-12_18:00:00.
+Time period #   5 to process = 2005-07-13_00:00:00.
+Time period #   6 to process = 2005-07-13_06:00:00.
+Time period #   7 to process = 2005-07-13_12:00:00.
+Time period #   8 to process = 2005-07-13_18:00:00.
+Time period #   9 to process = 2005-07-14_00:00:00.
+Time period #  10 to process = 2005-07-14_06:00:00.
+Time period #  11 to process = 2005-07-14_12:00:00.
+Time period #  12 to process = 2005-07-14_18:00:00.
+Time period #  13 to process = 2005-07-15_00:00:00.
+Time period #  14 to process = 2005-07-15_06:00:00.
+Time period #  15 to process = 2005-07-15_12:00:00.
+Time period #  16 to process = 2005-07-15_18:00:00.
+Time period #  17 to process = 2005-07-16_00:00:00.
+Time period #  18 to process = 2005-07-16_06:00:00.
+Time period #  19 to process = 2005-07-16_12:00:00.
+Time period #  20 to process = 2005-07-16_18:00:00.
+Time period #  21 to process = 2005-07-17_00:00:00.
+Time period #  22 to process = 2005-07-17_06:00:00.
+Time period #  23 to process = 2005-07-17_12:00:00.
+Time period #  24 to process = 2005-07-17_18:00:00.
+Time period #  25 to process = 2005-07-18_00:00:00.
+Total analysis times to input =   25.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-12_00:00:00.0000, which is loop #   1 out of   25
+ configflags%julyr, %julday, %gmt:        2005         193  0.0000000E+00
+ metgrid input_wrf.F first_date_input = 2005-07-12_00:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-12_00:00:00 Timing for input          0 s.
+d01 2005-07-12_00:00:00          flag_soil_layers read from met_em file is  1
+Max map factor in domain 1 =  1.11. Scale the dt in the model accordingly.
+Using sfcprs2 to compute psfc
+ Converged znw(kte) should be about 0.0 =  -4.7894244E-04
+Full level index =    1     Height =     0.0 m
+Full level index =    2     Height =    56.6 m      Thickness =   56.6 m
+Full level index =    3     Height =   137.9 m      Thickness =   81.4 m
+Full level index =    4     Height =   244.7 m      Thickness =  106.8 m
+Full level index =    5     Height =   377.6 m      Thickness =  132.9 m
+Full level index =    6     Height =   546.3 m      Thickness =  168.7 m
+Full level index =    7     Height =   761.1 m      Thickness =  214.8 m
+Full level index =    8     Height =  1016.2 m      Thickness =  255.0 m
+Full level index =    9     Height =  1199.7 m      Thickness =  183.5 m
+Full level index =   10     Height =  1386.6 m      Thickness =  186.9 m
+Full level index =   11     Height =  1577.1 m      Thickness =  190.5 m
+Full level index =   12     Height =  1771.3 m      Thickness =  194.2 m
+Full level index =   13     Height =  2148.9 m      Thickness =  377.5 m
+Full level index =   14     Height =  2526.4 m      Thickness =  377.5 m
+Full level index =   15     Height =  2903.9 m      Thickness =  377.5 m
+Full level index =   16     Height =  3281.5 m      Thickness =  377.5 m
+Full level index =   17     Height =  3659.0 m      Thickness =  377.5 m
+Full level index =   18     Height =  4036.6 m      Thickness =  377.5 m
+Full level index =   19     Height =  4414.1 m      Thickness =  377.5 m
+Full level index =   20     Height =  4791.6 m      Thickness =  377.5 m
+Full level index =   21     Height =  5169.2 m      Thickness =  377.5 m
+Full level index =   22     Height =  5546.7 m      Thickness =  377.5 m
+Full level index =   23     Height =  5924.3 m      Thickness =  377.5 m
+Full level index =   24     Height =  6301.8 m      Thickness =  377.5 m
+Full level index =   25     Height =  6679.3 m      Thickness =  377.5 m
+Full level index =   26     Height =  7056.9 m      Thickness =  377.5 m
+Full level index =   27     Height =  7434.4 m      Thickness =  377.5 m
+Full level index =   28     Height =  7812.0 m      Thickness =  377.5 m
+Full level index =   29     Height =  8189.5 m      Thickness =  377.5 m
+Full level index =   30     Height =  8567.0 m      Thickness =  377.5 m
+Full level index =   31     Height =  8944.6 m      Thickness =  377.5 m
+Full level index =   32     Height =  9322.1 m      Thickness =  377.5 m
+Full level index =   33     Height =  9699.7 m      Thickness =  377.5 m
+Full level index =   34     Height = 10077.2 m      Thickness =  377.5 m
+Full level index =   35     Height = 10454.7 m      Thickness =  377.5 m
+Full level index =   36     Height = 10832.3 m      Thickness =  377.5 m
+Full level index =   37     Height = 11209.8 m      Thickness =  377.5 m
+Full level index =   38     Height = 11587.4 m      Thickness =  377.5 m
+Full level index =   39     Height = 11964.9 m      Thickness =  377.5 m
+Full level index =   40     Height = 12342.4 m      Thickness =  377.5 m
+Full level index =   41     Height = 12720.0 m      Thickness =  377.5 m
+Full level index =   42     Height = 13097.5 m      Thickness =  377.5 m
+Full level index =   43     Height = 13475.1 m      Thickness =  377.5 m
+Full level index =   44     Height = 13852.6 m      Thickness =  377.5 m
+Full level index =   45     Height = 14230.1 m      Thickness =  377.5 m
+Full level index =   46     Height = 14607.7 m      Thickness =  377.5 m
+Full level index =   47     Height = 14985.2 m      Thickness =  377.5 m
+Full level index =   48     Height = 15362.8 m      Thickness =  377.5 m
+Full level index =   49     Height = 15740.3 m      Thickness =  377.5 m
+Full level index =   50     Height = 16117.8 m      Thickness =  377.5 m
+Full level index =   51     Height = 16495.4 m      Thickness =  377.5 m
+Full level index =   52     Height = 16872.9 m      Thickness =  377.5 m
+Full level index =   53     Height = 17250.4 m      Thickness =  377.5 m
+Full level index =   54     Height = 17628.0 m      Thickness =  377.5 m
+Full level index =   55     Height = 18005.5 m      Thickness =  377.5 m
+Full level index =   56     Height = 18383.1 m      Thickness =  377.5 m
+Full level index =   57     Height = 18760.6 m      Thickness =  377.5 m
+Full level index =   58     Height = 19138.1 m      Thickness =  377.5 m
+Full level index =   59     Height = 19515.7 m      Thickness =  377.5 m
+Full level index =   60     Height = 19893.2 m      Thickness =  377.5 m
+d01 2005-07-12_00:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-12_00:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-12_00:00:00 Timing for processing          1 s.
+d01 2005-07-12_00:00:00 Timing for output          0 s.
+d01 2005-07-12_00:00:00 Timing for loop #    1 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-12_06:00:00.0000, which is loop #   2 out of   25
+ configflags%julyr, %julday, %gmt:        2005         193   6.000000    
+ metgrid input_wrf.F first_date_input = 2005-07-12_06:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-12_06:00:00 Timing for input          0 s.
+d01 2005-07-12_06:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-12_06:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-12_06:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-12_06:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-12_00:00:00.0000 2005-07-12_06:00:00     
+d01 2005-07-12_06:00:00 Timing for output          0 s.
+d01 2005-07-12_06:00:00 Timing for loop #    2 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-12_12:00:00.0000, which is loop #   3 out of   25
+ configflags%julyr, %julday, %gmt:        2005         193   12.00000    
+ metgrid input_wrf.F first_date_input = 2005-07-12_12:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-12_12:00:00 Timing for input          0 s.
+d01 2005-07-12_12:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-12_12:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-12_12:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-12_12:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-12_06:00:00.0000 2005-07-12_12:00:00     
+d01 2005-07-12_12:00:00 Timing for output          0 s.
+d01 2005-07-12_12:00:00 Timing for loop #    3 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-12_18:00:00.0000, which is loop #   4 out of   25
+ configflags%julyr, %julday, %gmt:        2005         193   18.00000    
+ metgrid input_wrf.F first_date_input = 2005-07-12_18:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-12_18:00:00 Timing for input          0 s.
+d01 2005-07-12_18:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-12_18:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-12_18:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-12_18:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-12_12:00:00.0000 2005-07-12_18:00:00     
+d01 2005-07-12_18:00:00 Timing for output          0 s.
+d01 2005-07-12_18:00:00 Timing for loop #    4 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-13_00:00:00.0000, which is loop #   5 out of   25
+ configflags%julyr, %julday, %gmt:        2005         194  0.0000000E+00
+ metgrid input_wrf.F first_date_input = 2005-07-13_00:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-13_00:00:00 Timing for input          0 s.
+d01 2005-07-13_00:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-13_00:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-13_00:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-13_00:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-12_18:00:00.0000 2005-07-13_00:00:00     
+d01 2005-07-13_00:00:00 Timing for output          0 s.
+d01 2005-07-13_00:00:00 Timing for loop #    5 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-13_06:00:00.0000, which is loop #   6 out of   25
+ configflags%julyr, %julday, %gmt:        2005         194   6.000000    
+ metgrid input_wrf.F first_date_input = 2005-07-13_06:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-13_06:00:00 Timing for input          0 s.
+d01 2005-07-13_06:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-13_06:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-13_06:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-13_06:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-13_00:00:00.0000 2005-07-13_06:00:00     
+d01 2005-07-13_06:00:00 Timing for output          0 s.
+d01 2005-07-13_06:00:00 Timing for loop #    6 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-13_12:00:00.0000, which is loop #   7 out of   25
+ configflags%julyr, %julday, %gmt:        2005         194   12.00000    
+ metgrid input_wrf.F first_date_input = 2005-07-13_12:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-13_12:00:00 Timing for input          0 s.
+d01 2005-07-13_12:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-13_12:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-13_12:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-13_12:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-13_06:00:00.0000 2005-07-13_12:00:00     
+d01 2005-07-13_12:00:00 Timing for output          0 s.
+d01 2005-07-13_12:00:00 Timing for loop #    7 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-13_18:00:00.0000, which is loop #   8 out of   25
+ configflags%julyr, %julday, %gmt:        2005         194   18.00000    
+ metgrid input_wrf.F first_date_input = 2005-07-13_18:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-13_18:00:00 Timing for input          0 s.
+d01 2005-07-13_18:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-13_18:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-13_18:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-13_18:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-13_12:00:00.0000 2005-07-13_18:00:00     
+d01 2005-07-13_18:00:00 Timing for output          0 s.
+d01 2005-07-13_18:00:00 Timing for loop #    8 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-14_00:00:00.0000, which is loop #   9 out of   25
+ configflags%julyr, %julday, %gmt:        2005         195  0.0000000E+00
+ metgrid input_wrf.F first_date_input = 2005-07-14_00:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-14_00:00:00 Timing for input          0 s.
+d01 2005-07-14_00:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-14_00:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-14_00:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-14_00:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-13_18:00:00.0000 2005-07-14_00:00:00     
+d01 2005-07-14_00:00:00 Timing for output          0 s.
+d01 2005-07-14_00:00:00 Timing for loop #    9 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-14_06:00:00.0000, which is loop #  10 out of   25
+ configflags%julyr, %julday, %gmt:        2005         195   6.000000    
+ metgrid input_wrf.F first_date_input = 2005-07-14_06:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-14_06:00:00 Timing for input          0 s.
+d01 2005-07-14_06:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-14_06:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-14_06:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-14_06:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-14_00:00:00.0000 2005-07-14_06:00:00     
+d01 2005-07-14_06:00:00 Timing for output          0 s.
+d01 2005-07-14_06:00:00 Timing for loop #   10 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-14_12:00:00.0000, which is loop #  11 out of   25
+ configflags%julyr, %julday, %gmt:        2005         195   12.00000    
+ metgrid input_wrf.F first_date_input = 2005-07-14_12:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-14_12:00:00 Timing for input          0 s.
+d01 2005-07-14_12:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-14_12:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-14_12:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-14_12:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-14_06:00:00.0000 2005-07-14_12:00:00     
+d01 2005-07-14_12:00:00 Timing for output          0 s.
+d01 2005-07-14_12:00:00 Timing for loop #   11 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-14_18:00:00.0000, which is loop #  12 out of   25
+ configflags%julyr, %julday, %gmt:        2005         195   18.00000    
+ metgrid input_wrf.F first_date_input = 2005-07-14_18:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-14_18:00:00 Timing for input          0 s.
+d01 2005-07-14_18:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-14_18:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-14_18:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-14_18:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-14_12:00:00.0000 2005-07-14_18:00:00     
+d01 2005-07-14_18:00:00 Timing for output          0 s.
+d01 2005-07-14_18:00:00 Timing for loop #   12 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-15_00:00:00.0000, which is loop #  13 out of   25
+ configflags%julyr, %julday, %gmt:        2005         196  0.0000000E+00
+ metgrid input_wrf.F first_date_input = 2005-07-15_00:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-15_00:00:00 Timing for input          0 s.
+d01 2005-07-15_00:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-15_00:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-15_00:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-15_00:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-14_18:00:00.0000 2005-07-15_00:00:00     
+d01 2005-07-15_00:00:00 Timing for output          0 s.
+d01 2005-07-15_00:00:00 Timing for loop #   13 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-15_06:00:00.0000, which is loop #  14 out of   25
+ configflags%julyr, %julday, %gmt:        2005         196   6.000000    
+ metgrid input_wrf.F first_date_input = 2005-07-15_06:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-15_06:00:00 Timing for input          0 s.
+d01 2005-07-15_06:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-15_06:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-15_06:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-15_06:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-15_00:00:00.0000 2005-07-15_06:00:00     
+d01 2005-07-15_06:00:00 Timing for output          0 s.
+d01 2005-07-15_06:00:00 Timing for loop #   14 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-15_12:00:00.0000, which is loop #  15 out of   25
+ configflags%julyr, %julday, %gmt:        2005         196   12.00000    
+ metgrid input_wrf.F first_date_input = 2005-07-15_12:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-15_12:00:00 Timing for input          0 s.
+d01 2005-07-15_12:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-15_12:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-15_12:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-15_12:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-15_06:00:00.0000 2005-07-15_12:00:00     
+d01 2005-07-15_12:00:00 Timing for output          0 s.
+d01 2005-07-15_12:00:00 Timing for loop #   15 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-15_18:00:00.0000, which is loop #  16 out of   25
+ configflags%julyr, %julday, %gmt:        2005         196   18.00000    
+ metgrid input_wrf.F first_date_input = 2005-07-15_18:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-15_18:00:00 Timing for input          0 s.
+d01 2005-07-15_18:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-15_18:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-15_18:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-15_18:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-15_12:00:00.0000 2005-07-15_18:00:00     
+d01 2005-07-15_18:00:00 Timing for output          0 s.
+d01 2005-07-15_18:00:00 Timing for loop #   16 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-16_00:00:00.0000, which is loop #  17 out of   25
+ configflags%julyr, %julday, %gmt:        2005         197  0.0000000E+00
+ metgrid input_wrf.F first_date_input = 2005-07-16_00:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-16_00:00:00 Timing for input          0 s.
+d01 2005-07-16_00:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-16_00:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-16_00:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-16_00:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-15_18:00:00.0000 2005-07-16_00:00:00     
+d01 2005-07-16_00:00:00 Timing for output          0 s.
+d01 2005-07-16_00:00:00 Timing for loop #   17 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-16_06:00:00.0000, which is loop #  18 out of   25
+ configflags%julyr, %julday, %gmt:        2005         197   6.000000    
+ metgrid input_wrf.F first_date_input = 2005-07-16_06:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-16_06:00:00 Timing for input          0 s.
+d01 2005-07-16_06:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-16_06:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-16_06:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-16_06:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-16_00:00:00.0000 2005-07-16_06:00:00     
+d01 2005-07-16_06:00:00 Timing for output          0 s.
+d01 2005-07-16_06:00:00 Timing for loop #   18 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-16_12:00:00.0000, which is loop #  19 out of   25
+ configflags%julyr, %julday, %gmt:        2005         197   12.00000    
+ metgrid input_wrf.F first_date_input = 2005-07-16_12:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-16_12:00:00 Timing for input          0 s.
+d01 2005-07-16_12:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-16_12:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-16_12:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-16_12:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-16_06:00:00.0000 2005-07-16_12:00:00     
+d01 2005-07-16_12:00:00 Timing for output          0 s.
+d01 2005-07-16_12:00:00 Timing for loop #   19 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-16_18:00:00.0000, which is loop #  20 out of   25
+ configflags%julyr, %julday, %gmt:        2005         197   18.00000    
+ metgrid input_wrf.F first_date_input = 2005-07-16_18:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-16_18:00:00 Timing for input          0 s.
+d01 2005-07-16_18:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-16_18:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-16_18:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-16_18:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-16_12:00:00.0000 2005-07-16_18:00:00     
+d01 2005-07-16_18:00:00 Timing for output          0 s.
+d01 2005-07-16_18:00:00 Timing for loop #   20 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-17_00:00:00.0000, which is loop #  21 out of   25
+ configflags%julyr, %julday, %gmt:        2005         198  0.0000000E+00
+ metgrid input_wrf.F first_date_input = 2005-07-17_00:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-17_00:00:00 Timing for input          0 s.
+d01 2005-07-17_00:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-17_00:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-17_00:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-17_00:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-16_18:00:00.0000 2005-07-17_00:00:00     
+d01 2005-07-17_00:00:00 Timing for output          0 s.
+d01 2005-07-17_00:00:00 Timing for loop #   21 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-17_06:00:00.0000, which is loop #  22 out of   25
+ configflags%julyr, %julday, %gmt:        2005         198   6.000000    
+ metgrid input_wrf.F first_date_input = 2005-07-17_06:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-17_06:00:00 Timing for input          0 s.
+d01 2005-07-17_06:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-17_06:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-17_06:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-17_06:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-17_00:00:00.0000 2005-07-17_06:00:00     
+d01 2005-07-17_06:00:00 Timing for output          0 s.
+d01 2005-07-17_06:00:00 Timing for loop #   22 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-17_12:00:00.0000, which is loop #  23 out of   25
+ configflags%julyr, %julday, %gmt:        2005         198   12.00000    
+ metgrid input_wrf.F first_date_input = 2005-07-17_12:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-17_12:00:00 Timing for input          0 s.
+d01 2005-07-17_12:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-17_12:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-17_12:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-17_12:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-17_06:00:00.0000 2005-07-17_12:00:00     
+d01 2005-07-17_12:00:00 Timing for output          0 s.
+d01 2005-07-17_12:00:00 Timing for loop #   23 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-17_18:00:00.0000, which is loop #  24 out of   25
+ configflags%julyr, %julday, %gmt:        2005         198   18.00000    
+ metgrid input_wrf.F first_date_input = 2005-07-17_18:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-17_18:00:00 Timing for input          0 s.
+d01 2005-07-17_18:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-17_18:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-17_18:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-17_18:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-17_12:00:00.0000 2005-07-17_18:00:00     
+d01 2005-07-17_18:00:00 Timing for output          0 s.
+d01 2005-07-17_18:00:00 Timing for loop #   24 =          1 s.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  1: Current date being processed: 2005-07-18_00:00:00.0000, which is loop #  25 out of   25
+ configflags%julyr, %julday, %gmt:        2005         199  0.0000000E+00
+ metgrid input_wrf.F first_date_input = 2005-07-18_00:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d01 2005-07-18_00:00:00 Timing for input          0 s.
+d01 2005-07-18_00:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+d01 2005-07-18_00:00:00   flag value of flag_qnwfa is            0
+d01 2005-07-18_00:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :           42
+d01 2005-07-18_00:00:00 Timing for processing          1 s.
+ LBC valid between these times 2005-07-17_18:00:00.0000 2005-07-18_00:00:00     
+d01 2005-07-18_00:00:00 Timing for output          0 s.
+d01 2005-07-18_00:00:00 Timing for loop #   25 =          1 s.
+ *************************************
+ Nesting domain
+ ids,ide,jds,jde            1         181           1         181
+ ims,ime,jms,jme           -4         186          -4         186
+ ips,ipe,jps,jpe            1         181           1         181
+ INTERMEDIATE domain
+ ids,ide,jds,jde           29          94          29          94
+ ims,ime,jms,jme           24          99          24          99
+ ips,ipe,jps,jpe           27          96          27          96
+ *************************************
+d01 2005-07-18_00:00:00  alloc_space_field: domain            2 ,             1628844632  bytes allocated
+Time period #   1 to process = 2005-07-12_00:00:00.
+Time period #   2 to process = 2005-07-12_06:00:00.
+Time period #   3 to process = 2005-07-12_12:00:00.
+Time period #   4 to process = 2005-07-12_18:00:00.
+Time period #   5 to process = 2005-07-13_00:00:00.
+Time period #   6 to process = 2005-07-13_06:00:00.
+Time period #   7 to process = 2005-07-13_12:00:00.
+Time period #   8 to process = 2005-07-13_18:00:00.
+Time period #   9 to process = 2005-07-14_00:00:00.
+Time period #  10 to process = 2005-07-14_06:00:00.
+Time period #  11 to process = 2005-07-14_12:00:00.
+Time period #  12 to process = 2005-07-14_18:00:00.
+Time period #  13 to process = 2005-07-15_00:00:00.
+Time period #  14 to process = 2005-07-15_06:00:00.
+Time period #  15 to process = 2005-07-15_12:00:00.
+Time period #  16 to process = 2005-07-15_18:00:00.
+Time period #  17 to process = 2005-07-16_00:00:00.
+Time period #  18 to process = 2005-07-16_06:00:00.
+Time period #  19 to process = 2005-07-16_12:00:00.
+Time period #  20 to process = 2005-07-16_18:00:00.
+Time period #  21 to process = 2005-07-17_00:00:00.
+Time period #  22 to process = 2005-07-17_06:00:00.
+Time period #  23 to process = 2005-07-17_12:00:00.
+Time period #  24 to process = 2005-07-17_18:00:00.
+Time period #  25 to process = 2005-07-18_00:00:00.
+Total analysis times to input =   25.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  2: Current date being processed: 2005-07-12_00:00:00.0000, which is loop #   1 out of   25
+ configflags%julyr, %julday, %gmt:        2005         193  0.0000000E+00
+ metgrid input_wrf.F first_date_input = 2005-07-12_00:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d02 2005-07-12_00:00:00 Timing for input          0 s.
+d02 2005-07-12_00:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+ Converged znw(kte) should be about 0.0 =  -4.7894244E-04
+Full level index =    1     Height =     0.0 m
+Full level index =    2     Height =    56.6 m      Thickness =   56.6 m
+Full level index =    3     Height =   137.9 m      Thickness =   81.4 m
+Full level index =    4     Height =   244.7 m      Thickness =  106.8 m
+Full level index =    5     Height =   377.6 m      Thickness =  132.9 m
+Full level index =    6     Height =   546.3 m      Thickness =  168.7 m
+Full level index =    7     Height =   761.1 m      Thickness =  214.8 m
+Full level index =    8     Height =  1016.2 m      Thickness =  255.0 m
+Full level index =    9     Height =  1199.7 m      Thickness =  183.5 m
+Full level index =   10     Height =  1386.6 m      Thickness =  186.9 m
+Full level index =   11     Height =  1577.1 m      Thickness =  190.5 m
+Full level index =   12     Height =  1771.3 m      Thickness =  194.2 m
+Full level index =   13     Height =  2148.9 m      Thickness =  377.5 m
+Full level index =   14     Height =  2526.4 m      Thickness =  377.5 m
+Full level index =   15     Height =  2903.9 m      Thickness =  377.5 m
+Full level index =   16     Height =  3281.5 m      Thickness =  377.5 m
+Full level index =   17     Height =  3659.0 m      Thickness =  377.5 m
+Full level index =   18     Height =  4036.6 m      Thickness =  377.5 m
+Full level index =   19     Height =  4414.1 m      Thickness =  377.5 m
+Full level index =   20     Height =  4791.6 m      Thickness =  377.5 m
+Full level index =   21     Height =  5169.2 m      Thickness =  377.5 m
+Full level index =   22     Height =  5546.7 m      Thickness =  377.5 m
+Full level index =   23     Height =  5924.3 m      Thickness =  377.5 m
+Full level index =   24     Height =  6301.8 m      Thickness =  377.5 m
+Full level index =   25     Height =  6679.3 m      Thickness =  377.5 m
+Full level index =   26     Height =  7056.9 m      Thickness =  377.5 m
+Full level index =   27     Height =  7434.4 m      Thickness =  377.5 m
+Full level index =   28     Height =  7812.0 m      Thickness =  377.5 m
+Full level index =   29     Height =  8189.5 m      Thickness =  377.5 m
+Full level index =   30     Height =  8567.0 m      Thickness =  377.5 m
+Full level index =   31     Height =  8944.6 m      Thickness =  377.5 m
+Full level index =   32     Height =  9322.1 m      Thickness =  377.5 m
+Full level index =   33     Height =  9699.7 m      Thickness =  377.5 m
+Full level index =   34     Height = 10077.2 m      Thickness =  377.5 m
+Full level index =   35     Height = 10454.7 m      Thickness =  377.5 m
+Full level index =   36     Height = 10832.3 m      Thickness =  377.5 m
+Full level index =   37     Height = 11209.8 m      Thickness =  377.5 m
+Full level index =   38     Height = 11587.4 m      Thickness =  377.5 m
+Full level index =   39     Height = 11964.9 m      Thickness =  377.5 m
+Full level index =   40     Height = 12342.4 m      Thickness =  377.5 m
+Full level index =   41     Height = 12720.0 m      Thickness =  377.5 m
+Full level index =   42     Height = 13097.5 m      Thickness =  377.5 m
+Full level index =   43     Height = 13475.1 m      Thickness =  377.5 m
+Full level index =   44     Height = 13852.6 m      Thickness =  377.5 m
+Full level index =   45     Height = 14230.1 m      Thickness =  377.5 m
+Full level index =   46     Height = 14607.7 m      Thickness =  377.5 m
+Full level index =   47     Height = 14985.2 m      Thickness =  377.5 m
+Full level index =   48     Height = 15362.8 m      Thickness =  377.5 m
+Full level index =   49     Height = 15740.3 m      Thickness =  377.5 m
+Full level index =   50     Height = 16117.8 m      Thickness =  377.5 m
+Full level index =   51     Height = 16495.4 m      Thickness =  377.5 m
+Full level index =   52     Height = 16872.9 m      Thickness =  377.5 m
+Full level index =   53     Height = 17250.4 m      Thickness =  377.5 m
+Full level index =   54     Height = 17628.0 m      Thickness =  377.5 m
+Full level index =   55     Height = 18005.5 m      Thickness =  377.5 m
+Full level index =   56     Height = 18383.1 m      Thickness =  377.5 m
+Full level index =   57     Height = 18760.6 m      Thickness =  377.5 m
+Full level index =   58     Height = 19138.1 m      Thickness =  377.5 m
+Full level index =   59     Height = 19515.7 m      Thickness =  377.5 m
+Full level index =   60     Height = 19893.2 m      Thickness =  377.5 m
+d02 2005-07-12_00:00:00   flag value of flag_qnwfa is            0
+d02 2005-07-12_00:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :          128
+d02 2005-07-12_00:00:00 Timing for processing          2 s.
+d02 2005-07-12_00:00:00 Timing for output          0 s.
+d02 2005-07-12_00:00:00 Timing for loop #    1 =          2 s.
+ *************************************
+ Nesting domain
+ ids,ide,jds,jde            1         181           1         181
+ ims,ime,jms,jme           -4         186          -4         186
+ ips,ipe,jps,jpe            1         181           1         181
+ INTERMEDIATE domain
+ ids,ide,jds,jde           59         124          59         124
+ ims,ime,jms,jme           54         129          54         129
+ ips,ipe,jps,jpe           57         126          57         126
+ *************************************
+d02 2005-07-12_06:00:00  alloc_space_field: domain            3 ,               81834368  bytes allocated
+d02 2005-07-12_06:00:00  alloc_space_field: domain            3 ,             1620089192  bytes allocated
+Time period #   1 to process = 2005-07-12_00:00:00.
+Time period #   2 to process = 2005-07-12_06:00:00.
+Time period #   3 to process = 2005-07-12_12:00:00.
+Time period #   4 to process = 2005-07-12_18:00:00.
+Time period #   5 to process = 2005-07-13_00:00:00.
+Time period #   6 to process = 2005-07-13_06:00:00.
+Time period #   7 to process = 2005-07-13_12:00:00.
+Time period #   8 to process = 2005-07-13_18:00:00.
+Time period #   9 to process = 2005-07-14_00:00:00.
+Time period #  10 to process = 2005-07-14_06:00:00.
+Time period #  11 to process = 2005-07-14_12:00:00.
+Time period #  12 to process = 2005-07-14_18:00:00.
+Time period #  13 to process = 2005-07-15_00:00:00.
+Time period #  14 to process = 2005-07-15_06:00:00.
+Time period #  15 to process = 2005-07-15_12:00:00.
+Time period #  16 to process = 2005-07-15_18:00:00.
+Time period #  17 to process = 2005-07-16_00:00:00.
+Time period #  18 to process = 2005-07-16_06:00:00.
+Time period #  19 to process = 2005-07-16_12:00:00.
+Time period #  20 to process = 2005-07-16_18:00:00.
+Time period #  21 to process = 2005-07-17_00:00:00.
+Time period #  22 to process = 2005-07-17_06:00:00.
+Time period #  23 to process = 2005-07-17_12:00:00.
+Time period #  24 to process = 2005-07-17_18:00:00.
+Time period #  25 to process = 2005-07-18_00:00:00.
+Total analysis times to input =   25.
+  
+ -----------------------------------------------------------------------------
+  
+ Domain  3: Current date being processed: 2005-07-12_00:00:00.0000, which is loop #   1 out of   25
+ configflags%julyr, %julday, %gmt:        2005         193  0.0000000E+00
+ metgrid input_wrf.F first_date_input = 2005-07-12_00:00:00
+ metgrid input_wrf.F first_date_nml = 2005-07-12_00:00:00
+d03 2005-07-12_00:00:00 Timing for input          0 s.
+d03 2005-07-12_00:00:00          flag_soil_layers read from met_em file is  1
+Using sfcprs2 to compute psfc
+ Converged znw(kte) should be about 0.0 =  -4.7894244E-04
+Full level index =    1     Height =     0.0 m
+Full level index =    2     Height =    56.6 m      Thickness =   56.6 m
+Full level index =    3     Height =   137.9 m      Thickness =   81.4 m
+Full level index =    4     Height =   244.7 m      Thickness =  106.8 m
+Full level index =    5     Height =   377.6 m      Thickness =  132.9 m
+Full level index =    6     Height =   546.3 m      Thickness =  168.7 m
+Full level index =    7     Height =   761.1 m      Thickness =  214.8 m
+Full level index =    8     Height =  1016.2 m      Thickness =  255.0 m
+Full level index =    9     Height =  1199.7 m      Thickness =  183.5 m
+Full level index =   10     Height =  1386.6 m      Thickness =  186.9 m
+Full level index =   11     Height =  1577.1 m      Thickness =  190.5 m
+Full level index =   12     Height =  1771.3 m      Thickness =  194.2 m
+Full level index =   13     Height =  2148.9 m      Thickness =  377.5 m
+Full level index =   14     Height =  2526.4 m      Thickness =  377.5 m
+Full level index =   15     Height =  2903.9 m      Thickness =  377.5 m
+Full level index =   16     Height =  3281.5 m      Thickness =  377.5 m
+Full level index =   17     Height =  3659.0 m      Thickness =  377.5 m
+Full level index =   18     Height =  4036.6 m      Thickness =  377.5 m
+Full level index =   19     Height =  4414.1 m      Thickness =  377.5 m
+Full level index =   20     Height =  4791.6 m      Thickness =  377.5 m
+Full level index =   21     Height =  5169.2 m      Thickness =  377.5 m
+Full level index =   22     Height =  5546.7 m      Thickness =  377.5 m
+Full level index =   23     Height =  5924.3 m      Thickness =  377.5 m
+Full level index =   24     Height =  6301.8 m      Thickness =  377.5 m
+Full level index =   25     Height =  6679.3 m      Thickness =  377.5 m
+Full level index =   26     Height =  7056.9 m      Thickness =  377.5 m
+Full level index =   27     Height =  7434.4 m      Thickness =  377.5 m
+Full level index =   28     Height =  7812.0 m      Thickness =  377.5 m
+Full level index =   29     Height =  8189.5 m      Thickness =  377.5 m
+Full level index =   30     Height =  8567.0 m      Thickness =  377.5 m
+Full level index =   31     Height =  8944.6 m      Thickness =  377.5 m
+Full level index =   32     Height =  9322.1 m      Thickness =  377.5 m
+Full level index =   33     Height =  9699.7 m      Thickness =  377.5 m
+Full level index =   34     Height = 10077.2 m      Thickness =  377.5 m
+Full level index =   35     Height = 10454.7 m      Thickness =  377.5 m
+Full level index =   36     Height = 10832.3 m      Thickness =  377.5 m
+Full level index =   37     Height = 11209.8 m      Thickness =  377.5 m
+Full level index =   38     Height = 11587.4 m      Thickness =  377.5 m
+Full level index =   39     Height = 11964.9 m      Thickness =  377.5 m
+Full level index =   40     Height = 12342.4 m      Thickness =  377.5 m
+Full level index =   41     Height = 12720.0 m      Thickness =  377.5 m
+Full level index =   42     Height = 13097.5 m      Thickness =  377.5 m
+Full level index =   43     Height = 13475.1 m      Thickness =  377.5 m
+Full level index =   44     Height = 13852.6 m      Thickness =  377.5 m
+Full level index =   45     Height = 14230.1 m      Thickness =  377.5 m
+Full level index =   46     Height = 14607.7 m      Thickness =  377.5 m
+Full level index =   47     Height = 14985.2 m      Thickness =  377.5 m
+Full level index =   48     Height = 15362.8 m      Thickness =  377.5 m
+Full level index =   49     Height = 15740.3 m      Thickness =  377.5 m
+Full level index =   50     Height = 16117.8 m      Thickness =  377.5 m
+Full level index =   51     Height = 16495.4 m      Thickness =  377.5 m
+Full level index =   52     Height = 16872.9 m      Thickness =  377.5 m
+Full level index =   53     Height = 17250.4 m      Thickness =  377.5 m
+Full level index =   54     Height = 17628.0 m      Thickness =  377.5 m
+Full level index =   55     Height = 18005.5 m      Thickness =  377.5 m
+Full level index =   56     Height = 18383.1 m      Thickness =  377.5 m
+Full level index =   57     Height = 18760.6 m      Thickness =  377.5 m
+Full level index =   58     Height = 19138.1 m      Thickness =  377.5 m
+Full level index =   59     Height = 19515.7 m      Thickness =  377.5 m
+Full level index =   60     Height = 19893.2 m      Thickness =  377.5 m
+d03 2005-07-12_00:00:00   flag value of flag_qnwfa is            0
+d03 2005-07-12_00:00:00 No average surface temperature for use with inland lakes
+ Assume Noah LSM input
+ points artificially set to land :          383
+d03 2005-07-12_00:00:00 Timing for processing          2 s.
+d03 2005-07-12_00:00:00 Timing for output          0 s.
+d03 2005-07-12_00:00:00 Timing for loop #    1 =          2 s.
+d01 2005-07-18_00:00:00 real_em: SUCCESS COMPLETE REAL_EM INIT

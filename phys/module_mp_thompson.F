@@ -1431,6 +1431,8 @@
       REAL, DIMENSION(kts:kte):: temp, pres, qv
       REAL, DIMENSION(kts:kte):: rc, ri, rr, rs, rg, ni, nr, nc, nwfa, nifa
       real, dimension(kts:kte):: LAF ! local activation fraction=nc/Nt_c
+      real, dimension(kts:kte):: zm_level ! physical level of each vertical grid. bad coding practice but couldnt find the proper variable to use so it's specified here. 
+ 
       REAL, DIMENSION(kts:kte):: rho, rhof, rhof2
       REAL, DIMENSION(kts:kte):: qvs, qvsi, delQvs
       REAL, DIMENSION(kts:kte):: satw, sati, ssatw, ssati
@@ -1480,6 +1482,16 @@
       CHARACTER*256:: mp_debug
       INTEGER:: nu_c
 !+---+
+
+      zm_level = (/0.0,   56.6,  137.9,  244.7,  377.6,  546.3,  761.1,    &
+                   1016.2, 1199.7, 1386.6, 1577.1, 1771.3, 2148.9, 2526.4, &
+                   2903.9, 3281.5, 3659.0, 4036.6, 4414.1, 4791.6, 5169.2, &
+                   5546.7, 5924.3, 6301.8, 6679.3, 7056.9, 7434.4, 7812.0, &
+                   8189.5, 8567.0, 8944.6, 9322.1, 9699.7,10077.2,10454.7, &
+                   10832.3,11209.8,11587.4,11964.9,12342.4,12720.0,13097.5,&
+                   13475.1,13852.6,14230.1,14607.7,14985.2,15362.8,15740.3,&
+                   16117.8,16495.4,16872.9,17250.4,17628.0,18005.5,18383.1,&
+                   18760.6,19138.1,19515.7,19893.2/)
 
       debug_flag = .false.
 !     if (ii.eq.901 .and. jj.eq.379) debug_flag = .true.
