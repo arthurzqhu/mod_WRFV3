@@ -1000,6 +1000,53 @@
 
       END SUBROUTINE thompson_init
 !+---+-----------------------------------------------------------------+
+!..calculating relative dispersion in stratocumulus
+!+---+-----------------------------------------------------------------+
+
+      subroutine getNUinSc(nu_c, nc, rc, Nt_c, zm_level, cloud_or_not, &
+                           cloud_threshold, k, kts, kte, kds, kde)
+      implicit none
+
+      integer, intent(out):: nu_c
+      real, intent(in):: nc, Nt_c
+      INTEGER, INTENT(IN):: kts, kte, kds, kde
+      
+      real, dimension(kts:kte):: rc
+
+      real:: reldisp ! relative dispersion, related to nu_c
+      real:: LAF ! local activation fraction=nc/Nt_c
+      real:: NH ! normalized height in a cloud
+      real, dimension(kds:kde):: zm_level ! physical level of each vertical grid. bad coding practice but couldnt find the proper variable to use so it's specified here. 
+      integer, dimension(kts:kte):: cloud_or_not ! -1/1 array of whether a level has enough liquid water to be considered cloud
+      integer:: idx_cb, idx_ct  ! level index for cloud base and cloud top
+      real:: cloud_threshold = 1.e-5 ! threshold to be considered as cloud (kg/kg)
+
+
+      if (k > 10) then ! use the old equation for non-stratocumulus
+         nu_c = MIN(15, NINT(1000.E6/nc) + 2)
+      else
+         if (kts<=1) then ! not sure if it's 0-index or 1-index
+            if (any(rc(kts:kts+9) .gt. cloud_threshold)) then ! make sure it's within the boundary layer
+               cloud_or_not = sign(1, rc-cloud_threshold)
+               cloud_or_not(kts+10:kse)=-1 ! dont care about whether there's cloud above the boundary layer
+               idx_cb = findloc(cloud_or_not,1)
+               idx_ct = findloc(cloud_or_not,1, back= .true.)
+            endif
+      
+            LAF = nc/Nt_c
+            NH = (zm_level(k)-zm_level(idx_cb)) / (zm_level(idx_cb)-zm_level(idx_ct))
+            reldisp = 0.3881 - 0.1884*LAF - 0.1150*NH
+            nu_c = NINT(1/reldisp**2)
+         endif
+
+      endif
+
+      
+
+      end subroutine getNUinSc
+
+
+!+---+-----------------------------------------------------------------+
 !ctrlL
 !+---+-----------------------------------------------------------------+
 !..This is a wrapper routine designed to transfer values from 3D to 1D.
@@ -1430,9 +1477,7 @@
 
       REAL, DIMENSION(kts:kte):: temp, pres, qv
       REAL, DIMENSION(kts:kte):: rc, ri, rr, rs, rg, ni, nr, nc, nwfa, nifa
-      real, dimension(kts:kte):: LAF ! local activation fraction=nc/Nt_c
-      real, dimension(kts:kte):: zm_level ! physical level of each vertical grid. bad coding practice but couldnt find the proper variable to use so it's specified here. 
- 
+
       REAL, DIMENSION(kts:kte):: rho, rhof, rhof2
       REAL, DIMENSION(kts:kte):: qvs, qvsi, delQvs
       REAL, DIMENSION(kts:kte):: satw, sati, ssatw, ssati
@@ -1481,6 +1526,8 @@
       LOGICAL:: debug_flag
       CHARACTER*256:: mp_debug
       INTEGER:: nu_c
+      real, dimension(kds:kde):: zm_level ! physical level of each vertical grid. bad coding practice but couldnt find the proper variable to use so it's specified here. 
+
 !+---+
 
       zm_level = (/0.0,   56.6,  137.9,  244.7,  377.6,  546.3,  761.1,    &
@@ -1632,14 +1679,15 @@
          rho(k) = 0.622*pres(k)/(R*temp(k)*(qv(k)+0.622))
          nwfa(k) = MAX(11.1E6, MIN(9999.E6, nwfa1d(k)*rho(k)))
          nifa(k) = MAX(naIN1*0.01, MIN(9999.E6, nifa1d(k)*rho(k)))
-         LAF(k) = nc(k)/Nt_c
 
          if (qc1d(k) .gt. R1) then
             no_micro = .false.
             rc(k) = qc1d(k)*rho(k) 
             nc(k) = MAX(2., nc1d(k)*rho(k))
             L_qc(k) = .true.
-            nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
+            ! nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
+            call getNUinSc(nu_c, nc(k), rc, Nt_c, zm_level, cloud_or_not, &
+                           cloud_threshold, k, kts, kte, kds, kde)
             lamc = (nc(k)*am_r*ccg(2,nu_c)*ocg1(nu_c)/rc(k))**obmr
             xDc = (bm_r + nu_c + 1.) / lamc
             if (xDc.lt. D0c) then
@@ -1732,7 +1780,12 @@
             L_qg(k) = .false.
          endif
       enddo
-      if (any(rc .gt. 1.e-5)) print*, maxloc(rc), maxval(rc)
+
+      
+
+
+
+      ! if (any(rc .gt. 1.e-5)) print*, maxloc(rc), maxval(rc)
       !if (any((qc1d(k) .gt. R1))) stop
 
 !+---+-----------------------------------------------------------------+
@@ -1934,10 +1987,12 @@
 
          mvd_c(k) = D0c
          if (L_qc(k)) then
-          nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
-          xDc = MAX(D0c*1.E6, ((rc(k)/(am_r*nc(k)))**obmr) * 1.E6)
-          lamc = (nc(k)*am_r* ccg(2,nu_c) * ocg1(nu_c) / rc(k))**obmr
-          mvd_c(k) = (3.0+nu_c+0.672) / lamc
+         !  nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
+            call getNUinSc(nu_c, nc(k), rc, Nt_c, zm_level, cloud_or_not, &
+                           cloud_threshold, k, kts, kte, kds, kde)
+            xDc = MAX(D0c*1.E6, ((rc(k)/(am_r*nc(k)))**obmr) * 1.E6)
+            lamc = (nc(k)*am_r* ccg(2,nu_c) * ocg1(nu_c) / rc(k))**obmr
+            mvd_c(k) = (3.0+nu_c+0.672) / lamc
          endif
 
 !..Autoconversion follows Berry & Reinhardt (1974) with characteristic
@@ -2674,7 +2729,9 @@
          xrc=MAX(R1, (qc1d(k) + qcten(k)*dtsave)*rho(k))
          xnc=MAX(2., (nc1d(k) + ncten(k)*dtsave)*rho(k))
          if (xrc .gt. R1) then
-          nu_c = MIN(15, NINT(1000.E6/xnc) + 2)
+         !  nu_c = MIN(15, NINT(1000.E6/xnc) + 2)
+            call getNUinSc(nu_c, xnc, rc, Nt_c, zm_level, cloud_or_not, &
+                           cloud_threshold, k, kts, kte, kds, kde)
           lamc = (xnc*am_r*ccg(2,nu_c)*ocg1(nu_c)/rc(k))**obmr
           xDc = (bm_r + nu_c + 1.) / lamc
           if (xDc.lt. D0c) then
@@ -3246,7 +3303,9 @@
       do k = ksed1(5), kts, -1
          vtc = 0.
          if (rc(k) .gt. R1 .and. w1d(k) .lt. 1.E-1) then
-          nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
+         !  nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
+            call getNUinSc(nu_c, nc(k), rc, Nt_c, zm_level, cloud_or_not, &
+                           cloud_threshold, k, kts, kte, kds, kde)
           lamc = (nc(k)*am_r*ccg(2,nu_c)*ocg1(nu_c)/rc(k))**obmr
           ilamc = 1./lamc
           vtc = rhof(k)*av_c*ccg(5,nu_c)*ocg2(nu_c) * ilamc**bv_c
@@ -3534,7 +3593,9 @@
            qc1d(k) = 0.0
            nc1d(k) = 0.0
          else
-           nu_c = MIN(15, NINT(1000.E6/(nc1d(k)*rho(k))) + 2)
+         !   nu_c = MIN(15, NINT(1000.E6/(nc1d(k)*rho(k))) + 2)
+           call getNUinSc(nu_c, nc1d(k)*rho(k), rc, Nt_c, zm_level, cloud_or_not, &
+                           cloud_threshold, k, kts, kte, kds, kde)
            lamc = (am_r*ccg(2,nu_c)*ocg1(nu_c)*nc1d(k)/qc1d(k))**obmr
            xDc = (bm_r + nu_c + 1.) / lamc
            if (xDc.lt. D0c) then
