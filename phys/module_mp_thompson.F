@@ -52,7 +52,7 @@
 
       IMPLICIT NONE
 
-      LOGICAL, PARAMETER, PRIVATE:: iiwarm = .false.
+      LOGICAL, PARAMETER, PRIVATE:: iiwarm = .true.
       LOGICAL, PRIVATE:: is_aerosol_aware = .false.
       LOGICAL, PARAMETER, PRIVATE:: dustyIce = .true.
       LOGICAL, PARAMETER, PRIVATE:: homogIce = .true.
@@ -74,7 +74,7 @@
 !.. scheme.  In 2-moment cloud water, Nt_c represents a maximum of
 !.. droplet concentration and nu_c is also variable depending on local
 !.. droplet number concentration.
-      REAL, PARAMETER, PRIVATE:: Nt_c = 100.E6
+      REAL, PARAMETER, PRIVATE:: Nt_c = 200.E6
       REAL, PARAMETER, PRIVATE:: Nt_c_max = 1999.E6
 
 !..Declaration of constants for assumed CCN/IN aerosols when none in
@@ -1003,46 +1003,60 @@
 !..calculating relative dispersion in stratocumulus
 !+---+-----------------------------------------------------------------+
 
-      subroutine getNUinSc(nu_c, nc, rc, Nt_c, zm_level, k, kts, kte)
-      implicit none
-
-      integer, intent(out):: nu_c
-      real, intent(in):: nc, Nt_c
-      INTEGER, INTENT(IN):: k, kts, kte
-      real, dimension(:), intent(in):: zm_level ! physical level of each vertical grid. bad coding practice but couldnt find the proper variable to use so it's specified here. 
-
-      real, dimension(kts:kte):: rc
-      real:: reldisp ! relative dispersion, related to nu_c
-      real:: LAF ! local activation fraction=nc/Nt_c
-      real:: NH ! normalized height in a cloud
-      
-      integer, dimension(kts:kte):: cloud_or_not ! -1/1 array of whether a level has enough liquid water to be considered cloud
-      integer:: idx_cb, idx_ct  ! level index for cloud base and cloud top
-      real:: cloud_threshold ! threshold to be considered as cloud (kg/kg)
-
-      cloud_threshold = 1.e-5
-      if (k > 10) then ! use the old equation for non-stratocumulus
-         nu_c = MIN(15, NINT(1000.E6/nc) + 2)
-      else
-         if (kts<=1) then ! not sure if it's 0-index or 1-index
-            if (any(rc(kts:kts+9) .gt. cloud_threshold)) then ! make sure it's within the boundary layer
-               cloud_or_not = sign(1., rc-cloud_threshold)
-               cloud_or_not(kts+10:kte)=-1. ! dont care about whether there's cloud above the boundary layer
-               idx_cb = findloc(cloud_or_not,1.)
-               idx_ct = findloc(cloud_or_not,1., back= .true.)
-            endif
-      
-            LAF = nc/Nt_c
-            NH = (zm_level(k)-zm_level(idx_cb)) / (zm_level(idx_cb)-zm_level(idx_ct))
-            reldisp = 0.3881 - 0.1884*LAF - 0.1150*NH
-            nu_c = NINT(1/reldisp**2)
-         endif
-
-      endif
-
-      
-
-      end subroutine getNUinSc
+!      subroutine getNUinSc(nu_c, nc, Nt_c, k)!, zm_level, k, kts, kte)
+!      implicit none
+!
+!      integer, intent(out):: nu_c
+!      real, intent(in):: nc, Nt_c
+!      INTEGER, INTENT(IN):: k!, kts, kte
+!      !real, dimension(:), intent(in):: zm_level ! physical level of each vertical grid. bad coding practice but couldnt find the proper variable to use so it's specified here. 
+!      !real, dimension(:), intent(in):: rc
+!
+!      real:: reldisp ! relative dispersion, related to nu_c
+!      real:: LAF ! local activation fraction=nc/Nt_c
+!      !real:: NH ! normalized height in a cloud
+!      
+!      !real, dimension(kts:kte):: cloud_or_not ! -1/1 array of whether a level has enough liquid water to be considered cloud
+!      !integer:: idx_cb, idx_ct  ! level index for cloud base and cloud top
+!      !real:: cloud_threshold ! threshold to be considered as cloud (kg/kg)
+!
+!      !cloud_threshold = 1.e-5
+!      if (k > 10) then ! use the old equation for non-stratocumulus
+!         nu_c = MIN(15, NINT(1000.E6/nc) + 2)
+!      else
+!         !print*, 'before if'
+!         !print*, shape(rc),kts
+!         !print*, rc(kts:kts+9) 
+!         !if (kts<=1) then ! not sure if it's 0-index or 1-index
+!         !if (any(rc(kts:kts+9) .gt. cloud_threshold)) then ! make sure it's within the boundary layer
+!            !print*, 'in if'
+!         !   cloud_or_not = sign(1., rc-cloud_threshold)
+!         !   cloud_or_not(kts+10:kte)=-1. ! dont care about whether there's cloud above the boundary layer
+!         !   idx_cb = findloc(cloud_or_not, 1., dim=1)
+!         !   idx_ct = findloc(cloud_or_not, 1., dim=1, back= .true.)
+!!        !    print*, 'end of if', idx_cb, idx_ct
+!         !endif    
+!         LAF = nc/Nt_c
+!         
+!         !if (idx_cb >= idx_ct) then
+!         !   reldisp = 0.3881 - 0.1884*LAF
+!         !else
+!         !   NH = (zm_level(k)-zm_level(idx_cb)) / (zm_level(idx_ct)-zm_level(idx_cb))
+!         !   reldisp = 0.3881 - 0.1884*LAF - 0.1150*NH
+!         !endif
+!         !print*, reldisp
+!
+!         reldisp = 0.4 - 0.2*LAF
+!         nu_c = min(15, NINT(1/reldisp**2))
+!
+!         !print*, 'after if', NH, nu_c
+!         !endif
+!
+!      endif
+!
+!      !print*, nu_c
+!
+!      end subroutine getNUinSc
 
 
 !+---+-----------------------------------------------------------------+
@@ -1525,19 +1539,19 @@
       LOGICAL:: debug_flag
       CHARACTER*256:: mp_debug
       INTEGER:: nu_c
-      real, dimension(kds:kde):: zm_level ! physical level of each vertical grid. bad coding practice but couldnt find the proper variable to use so it's specified here. 
+!      real, dimension(60):: zm_level ! physical level of each vertical grid. bad coding practice but couldnt find the proper variable to use so it's specified here. 
 
 !+---+
 
-      zm_level = (/0.0,   56.6,  137.9,  244.7,  377.6,  546.3,  761.1,    &
-                   1016.2, 1199.7, 1386.6, 1577.1, 1771.3, 2148.9, 2526.4, &
-                   2903.9, 3281.5, 3659.0, 4036.6, 4414.1, 4791.6, 5169.2, &
-                   5546.7, 5924.3, 6301.8, 6679.3, 7056.9, 7434.4, 7812.0, &
-                   8189.5, 8567.0, 8944.6, 9322.1, 9699.7,10077.2,10454.7, &
-                   10832.3,11209.8,11587.4,11964.9,12342.4,12720.0,13097.5,&
-                   13475.1,13852.6,14230.1,14607.7,14985.2,15362.8,15740.3,&
-                   16117.8,16495.4,16872.9,17250.4,17628.0,18005.5,18383.1,&
-                   18760.6,19138.1,19515.7,19893.2/)
+!      zm_level = (/0.0,   56.6,  137.9,  244.7,  377.6,  546.3,  761.1,    &
+!                   1016.2, 1199.7, 1386.6, 1577.1, 1771.3, 2148.9, 2526.4, &
+!                   2903.9, 3281.5, 3659.0, 4036.6, 4414.1, 4791.6, 5169.2, &
+!                   5546.7, 5924.3, 6301.8, 6679.3, 7056.9, 7434.4, 7812.0, &
+!                   8189.5, 8567.0, 8944.6, 9322.1, 9699.7,10077.2,10454.7, &
+!                   10832.3,11209.8,11587.4,11964.9,12342.4,12720.0,13097.5,&
+!                   13475.1,13852.6,14230.1,14607.7,14985.2,15362.8,15740.3,&
+!                   16117.8,16495.4,16872.9,17250.4,17628.0,18005.5,18383.1,&
+!                   18760.6,19138.1,19515.7,19893.2/)
 
       debug_flag = .false.
 !     if (ii.eq.901 .and. jj.eq.379) debug_flag = .true.
@@ -1676,17 +1690,32 @@
          qv(k) = MAX(1.E-10, qv1d(k))
          pres(k) = p1d(k)
          rho(k) = 0.622*pres(k)/(R*temp(k)*(qv(k)+0.622))
+         if (qc1d(k) .gt. R1) then 
+            rc(k) = qc1d(k)*rho(k)
+            nc(k) = MAX(2., nc1d(k)*rho(k))
+         endif
+      enddo
+
+      do k = kts, kte
+         !temp(k) = t1d(k)
+         !qv(k) = MAX(1.E-10, qv1d(k))
+         !pres(k) = p1d(k)
+         !rho(k) = 0.622*pres(k)/(R*temp(k)*(qv(k)+0.622))
          nwfa(k) = MAX(11.1E6, MIN(9999.E6, nwfa1d(k)*rho(k)))
          nifa(k) = MAX(naIN1*0.01, MIN(9999.E6, nifa1d(k)*rho(k)))
 
          if (qc1d(k) .gt. R1) then
             no_micro = .false.
-            rc(k) = qc1d(k)*rho(k) 
-            nc(k) = MAX(2., nc1d(k)*rho(k))
+            !nc(k) = MAX(2., nc1d(k)*rho(k))
             L_qc(k) = .true.
-            ! nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
-            call getNUinSc(nu_c, nc(k), rc, Nt_c, zm_level, k, kts, kte)
+            if (k>10) then
+               nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
+            else
+               nu_c = min(15, nint(1./(0.4-0.2*nc(k)/maxval(nc))**2))
+               !print*, '1',nu_c
+            endif
             lamc = (nc(k)*am_r*ccg(2,nu_c)*ocg1(nu_c)/rc(k))**obmr
+            
             xDc = (bm_r + nu_c + 1.) / lamc
             if (xDc.lt. D0c) then
              lamc = cce(2,nu_c)/D0c
@@ -1696,6 +1725,7 @@
             nc(k) = MIN( DBLE(Nt_c_max), ccg(1,nu_c)*ocg2(nu_c)*rc(k)   &
                   / am_r*lamc**bm_r)
             if (.NOT. is_aerosol_aware) nc(k) = Nt_c
+            ! print*, nu_c, 'end of if'
          else
             qc1d(k) = 0.0
             nc1d(k) = 0.0
@@ -1777,6 +1807,7 @@
             rg(k) = R1
             L_qg(k) = .false.
          endif
+         
       enddo
 
       
@@ -1833,7 +1864,7 @@
          lvap(k) = lvap0 + (2106.0 - 4218.0)*tempc
          tcond(k) = (5.69 + 0.0168*tempc)*1.0E-5 * 418.936
       enddo
-
+!print*, 'after derive thermod'
 !+---+-----------------------------------------------------------------+
 !..If no existing hydrometeor species and no chance to initiate ice or
 !.. condense cloud water, just exit quickly!
@@ -1985,8 +2016,13 @@
 
          mvd_c(k) = D0c
          if (L_qc(k)) then
-         !  nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
-            call getNUinSc(nu_c, nc(k), rc, Nt_c, zm_level, k, kts, kte)
+           !nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
+            if (k>10) then
+               nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
+            else
+               nu_c = min(15, nint(1./(0.4-0.2*nc(k)/maxval(nc))**2))
+               !print*, '2', nu_c
+            endif
             xDc = MAX(D0c*1.E6, ((rc(k)/(am_r*nc(k)))**obmr) * 1.E6)
             lamc = (nc(k)*am_r* ccg(2,nu_c) * ocg1(nu_c) / rc(k))**obmr
             mvd_c(k) = (3.0+nu_c+0.672) / lamc
@@ -2039,7 +2075,7 @@
          endif
 
       enddo
-
+!print*, 'after calc autoc'
 !+---+-----------------------------------------------------------------+
 !..Compute all frozen hydrometeor species' process terms.
 !+---+-----------------------------------------------------------------+
@@ -2054,7 +2090,7 @@
          idx_t = MAX(1, -idx_t)
          idx_t = MIN(idx_t, ntb_t)
          IT = MAX(1, MIN(NINT(-tempc), 31) )
-
+!print*, 'temp lut idx'
 !..Cloud water lookup table index.
          if (rc(k).gt. r_c(1)) then
           nic = NINT(ALOG10(rc(k)))
@@ -2069,11 +2105,11 @@
          else
           idx_c = 1
          endif
-
+!print*, 'cwater lut idx'
 !..Cloud droplet number lookup table index.
          idx_n = NINT(1.0 + FLOAT(nbc) * DLOG(nc(k)/t_Nc(1)) / nic1)
          idx_n = MAX(1, MIN(idx_n, nbc))
-
+!print*, 'cnum lut idx'
 !..Cloud ice lookup table indexes.
          if (ri(k).gt. r_i(1)) then
           nii = NINT(ALOG10(ri(k)))
@@ -2102,7 +2138,7 @@
          else
           idx_i1 = 1
          endif
-
+!print*,'cice lut idx'
 !..Rain lookup table indexes.
          if (rr(k).gt. r_r(1)) then
           nir = NINT(ALOG10(rr(k)))
@@ -2131,7 +2167,7 @@
           idx_r = 1
           idx_r1 = ntb_r1
          endif
-
+!print*, 'rain lut idx'
 !..Snow lookup table index.
          if (rs(k).gt. r_s(1)) then
           nis = NINT(ALOG10(rs(k)))
@@ -2146,7 +2182,7 @@
          else
           idx_s = 1
          endif
-
+!print*, 'snow lut idx'
 !..Graupel lookup table index.
          if (rg(k).gt. r_g(1)) then
           nig = NINT(ALOG10(rg(k)))
@@ -2175,7 +2211,7 @@
           idx_g = 1
           idx_g1 = ntb_g1
          endif
-
+!print*, 'gr lut idx'
 !..Deposition/sublimation prefactor (from Srivastava & Coen 1992).
          otemp = 1./temp(k)
          rvs = rho(k)*qvsi(k)
@@ -2723,11 +2759,21 @@
 
 !..Cloud water mass/number balance; keep mass-wt mean size between
 !.. 1 and 50 microns.  Also no more than Nt_c_max drops total.
+      enddo
+      do k = kts, kte
+         orho = 1./rho(k)
+         lfus2 = lsub - lvap(k)
          xrc=MAX(R1, (qc1d(k) + qcten(k)*dtsave)*rho(k))
          xnc=MAX(2., (nc1d(k) + ncten(k)*dtsave)*rho(k))
          if (xrc .gt. R1) then
-         !  nu_c = MIN(15, NINT(1000.E6/xnc) + 2)
-            call getNUinSc(nu_c, xnc, rc, Nt_c, zm_level, k, kts, kte)
+           !nu_c = MIN(15, NINT(1000.E6/xnc) + 2)
+           if (k>10) then
+              nu_c = MIN(15, NINT(1000.E6/xnc) + 2)
+           else
+              nu_c = min(15, nint(1./(0.4-0.2*xnc/maxval((nc1d+ncten*dtsave)*rho))**2))
+              !print*, '3', nu_c
+           endif
+           !call getNUinSc(nu_c, xnc, Nt_c, k) !, rc, Nt_c, zm_level, k, kts, kte)
           lamc = (xnc*am_r*ccg(2,nu_c)*ocg1(nu_c)/rc(k))**obmr
           xDc = (bm_r + nu_c + 1.) / lamc
           if (xDc.lt. D0c) then
@@ -3299,8 +3345,14 @@
       do k = ksed1(5), kts, -1
          vtc = 0.
          if (rc(k) .gt. R1 .and. w1d(k) .lt. 1.E-1) then
-         !  nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
-            call getNUinSc(nu_c, nc(k), rc, Nt_c, zm_level, k, kts, kte)
+           !nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
+            !if (k>10) then
+            nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
+            !else
+            !   nu_c = min(15, nint(1./(0.4-0.2*nc(k)/Nt_c)**2))
+            !   print
+            !endif
+            !call getNUinSc(nu_c, nc(k), Nt_C, k) !, rc, Nt_c, zm_level, k, kts, kte)
           lamc = (nc(k)*am_r*ccg(2,nu_c)*ocg1(nu_c)/rc(k))**obmr
           ilamc = 1./lamc
           vtc = rhof(k)*av_c*ccg(5,nu_c)*ocg2(nu_c) * ilamc**bv_c
@@ -3570,7 +3622,7 @@
          endif
       enddo
       endif
-
+!print*, 'before passing back'
 !+---+-----------------------------------------------------------------+
 !.. All tendencies computed, apply and pass back final values to parent.
 !+---+-----------------------------------------------------------------+
@@ -3579,6 +3631,15 @@
          qv1d(k) = MAX(1.E-10, qv1d(k) + qvten(k)*DT)
          qc1d(k) = qc1d(k) + qcten(k)*DT
          nc1d(k) = MAX(2./rho(k), nc1d(k) + ncten(k)*DT)
+         nc(k) = MAX(2., (nc1d(k) + ncten(k)*DT)*rho(k))
+      enddo
+
+      do k = kts, kte
+         !t1d(k)  = t1d(k) + tten(k)*DT
+         !qv1d(k) = MAX(1.E-10, qv1d(k) + qvten(k)*DT)
+         !qc1d(k) = qc1d(k) + qcten(k)*DT
+         !nc1d(k) = MAX(2./rho(k), nc1d(k) + ncten(k)*DT)
+         !nc(k) = MAX(2., (nc1d(k) + ncten(k)*DT)*rho(k))
          nwfa1d(k) = MAX(11.1E6/rho(k), MIN(9999.E6/rho(k),             &
                        (nwfa1d(k)+nwfaten(k)*DT)))
          nifa1d(k) = MAX(naIN1*0.01, MIN(9999.E6/rho(k),                &
@@ -3588,9 +3649,18 @@
            qc1d(k) = 0.0
            nc1d(k) = 0.0
          else
-         !   nu_c = MIN(15, NINT(1000.E6/(nc1d(k)*rho(k))) + 2)
-           call getNUinSc(nu_c, nc1d(k)*rho(k), rc, Nt_c, zm_level, k, kts, kte)
+            !nu_c = MIN(15, NINT(1000.E6/(nc1d(k)*rho(k))) + 2)
+            !print*, 'before 4', nc(k), Nt_c, 0.4-0.2*(nc(k)/maxval(nc)), 1./(0.4-0.2*(nc(k)/Nt_c))**2, nint(1./(0.4-0.2*(nc(k)/Nt_c))**2), min(15, nint(1./(0.4-0.2*(nc(k)/Nt_c))**2))
+            if (k>10) then
+               nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
+            else
+               nu_c = min(15, nint(1./(0.4-0.2*(nc(k)/maxval(nc)))**2))
+               !print*, '4', nu_c
+            endif
+           !print*, 'nu done', am_r, nu_c
+           !call getNUinSc(nu_c, nc1d(k)*rho(k), Nt_c, k) !, rc, Nt_c, zm_level, k, kts, kte)
            lamc = (am_r*ccg(2,nu_c)*ocg1(nu_c)*nc1d(k)/qc1d(k))**obmr
+           !print*, 'lamc done'
            xDc = (bm_r + nu_c + 1.) / lamc
            if (xDc.lt. D0c) then
             lamc = cce(2,nu_c)/D0c
@@ -3599,6 +3669,7 @@
            endif
            nc1d(k) = MIN(ccg(1,nu_c)*ocg2(nu_c)*qc1d(k)/am_r*lamc**bm_r,&
                          DBLE(Nt_c_max)/rho(k))
+           !print*, 'nc done'
          endif
 
          qi1d(k) = qi1d(k) + qiten(k)*DT
@@ -3639,7 +3710,7 @@
          qg1d(k) = qg1d(k) + qgten(k)*DT
          if (qg1d(k) .le. R1) qg1d(k) = 0.0
       enddo
-
+!print*, 'end of thompson'
       end subroutine mp_thompson
 !+---+-----------------------------------------------------------------+
 !ctrlL

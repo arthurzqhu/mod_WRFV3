@@ -1,6 +1,6 @@
  &time_control
- run_days                            = 6,
- run_hours                           = 0, 
+ run_days                            = 0,
+ run_hours                           = 5, 
  run_minutes                         = 0,
  run_seconds                         = 0,
  start_year                          = 2005, 2005, 2005,
@@ -20,7 +20,7 @@
  history_interval                    = 360,   360,  360,
  frames_per_outfile                  = 1, 1, 1,
  restart                             = .false.,
- restart_interval                    = 1000,
+ restart_interval                    = 5000,
  io_form_history                     = 2
  io_form_restart                     = 2
  io_form_input                       = 2

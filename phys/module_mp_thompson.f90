@@ -50,7 +50,7 @@
 
       IMPLICIT NONE
 
-      LOGICAL, PARAMETER, PRIVATE:: iiwarm = .false.
+      LOGICAL, PARAMETER, PRIVATE:: iiwarm = .true.
       LOGICAL, PRIVATE:: is_aerosol_aware = .false.
       LOGICAL, PARAMETER, PRIVATE:: dustyIce = .true.
       LOGICAL, PARAMETER, PRIVATE:: homogIce = .true.
@@ -72,7 +72,7 @@
 
 
 
-      REAL, PARAMETER, PRIVATE:: Nt_c = 100.E6
+      REAL, PARAMETER, PRIVATE:: Nt_c = 200.E6
       REAL, PARAMETER, PRIVATE:: Nt_c_max = 1999.E6
 
 
@@ -994,6 +994,66 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       SUBROUTINE mp_gt_driver(qv, qc, qr, qi, qs, qg, ni, nr, nc,       &
                               nwfa, nifa, nwfa2d,                       &
                               th, pii, p, w, dz, dt_in, itimestep,      &
@@ -1395,7 +1455,7 @@
 
       REAL, DIMENSION(kts:kte):: temp, pres, qv
       REAL, DIMENSION(kts:kte):: rc, ri, rr, rs, rg, ni, nr, nc, nwfa, nifa
-      real, dimension(kts:kte):: LAF 
+
       REAL, DIMENSION(kts:kte):: rho, rhof, rhof2
       REAL, DIMENSION(kts:kte):: qvs, qvsi, delQvs
       REAL, DIMENSION(kts:kte):: satw, sati, ssatw, ssati
@@ -1444,6 +1504,18 @@
       LOGICAL:: debug_flag
       CHARACTER*256:: mp_debug
       INTEGER:: nu_c
+
+
+
+
+
+
+
+
+
+
+
+
 
 
       debug_flag = .false.
@@ -1577,17 +1649,32 @@
          qv(k) = MAX(1.E-10, qv1d(k))
          pres(k) = p1d(k)
          rho(k) = 0.622*pres(k)/(R*temp(k)*(qv(k)+0.622))
+         if (qc1d(k) .gt. R1) then 
+            rc(k) = qc1d(k)*rho(k)
+            nc(k) = MAX(2., nc1d(k)*rho(k))
+         endif
+      enddo
+
+      do k = kts, kte
+         
+         
+         
+         
          nwfa(k) = MAX(11.1E6, MIN(9999.E6, nwfa1d(k)*rho(k)))
          nifa(k) = MAX(naIN1*0.01, MIN(9999.E6, nifa1d(k)*rho(k)))
-         LAF(k) = nc(k)/Nt_c
 
          if (qc1d(k) .gt. R1) then
             no_micro = .false.
-            rc(k) = qc1d(k)*rho(k) 
-            nc(k) = MAX(2., nc1d(k)*rho(k))
+            
             L_qc(k) = .true.
-            nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
+            if (k>10) then
+               nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
+            else
+               nu_c = min(15, nint(1./(0.4-0.2*nc(k)/maxval(nc))**2))
+
+            endif
             lamc = (nc(k)*am_r*ccg(2,nu_c)*ocg1(nu_c)/rc(k))**obmr
+            
             xDc = (bm_r + nu_c + 1.) / lamc
             if (xDc.lt. D0c) then
              lamc = cce(2,nu_c)/D0c
@@ -1597,6 +1684,7 @@
             nc(k) = MIN( DBLE(Nt_c_max), ccg(1,nu_c)*ocg2(nu_c)*rc(k)   &
                   / am_r*lamc**bm_r)
             if (.NOT. is_aerosol_aware) nc(k) = Nt_c
+
          else
             qc1d(k) = 0.0
             nc1d(k) = 0.0
@@ -1678,8 +1766,14 @@
             rg(k) = R1
             L_qg(k) = .false.
          endif
+         
       enddo
-      if (any(rc .gt. 1.e-5)) print*, maxloc(rc), maxval(rc)
+
+      
+
+
+
+      
       
 
 
@@ -1881,10 +1975,16 @@
 
          mvd_c(k) = D0c
          if (L_qc(k)) then
-          nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
-          xDc = MAX(D0c*1.E6, ((rc(k)/(am_r*nc(k)))**obmr) * 1.E6)
-          lamc = (nc(k)*am_r* ccg(2,nu_c) * ocg1(nu_c) / rc(k))**obmr
-          mvd_c(k) = (3.0+nu_c+0.672) / lamc
+           
+            if (k>10) then
+               nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
+            else
+               nu_c = min(15, nint(1./(0.4-0.2*nc(k)/maxval(nc))**2))
+
+            endif
+            xDc = MAX(D0c*1.E6, ((rc(k)/(am_r*nc(k)))**obmr) * 1.E6)
+            lamc = (nc(k)*am_r* ccg(2,nu_c) * ocg1(nu_c) / rc(k))**obmr
+            mvd_c(k) = (3.0+nu_c+0.672) / lamc
          endif
 
 
@@ -2618,10 +2718,21 @@
 
 
 
+      enddo
+      do k = kts, kte
+         orho = 1./rho(k)
+         lfus2 = lsub - lvap(k)
          xrc=MAX(R1, (qc1d(k) + qcten(k)*dtsave)*rho(k))
          xnc=MAX(2., (nc1d(k) + ncten(k)*dtsave)*rho(k))
          if (xrc .gt. R1) then
-          nu_c = MIN(15, NINT(1000.E6/xnc) + 2)
+           
+           if (k>10) then
+              nu_c = MIN(15, NINT(1000.E6/xnc) + 2)
+           else
+              nu_c = min(15, nint(1./(0.4-0.2*xnc/maxval((nc1d+ncten*dtsave)*rho))**2))
+
+           endif
+           
           lamc = (xnc*am_r*ccg(2,nu_c)*ocg1(nu_c)/rc(k))**obmr
           xDc = (bm_r + nu_c + 1.) / lamc
           if (xDc.lt. D0c) then
@@ -3183,7 +3294,14 @@
       do k = ksed1(5), kts, -1
          vtc = 0.
          if (rc(k) .gt. R1 .and. w1d(k) .lt. 1.E-1) then
-          nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
+           
+            
+            nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
+            
+            
+            
+            
+            
           lamc = (nc(k)*am_r*ccg(2,nu_c)*ocg1(nu_c)/rc(k))**obmr
           ilamc = 1./lamc
           vtc = rhof(k)*av_c*ccg(5,nu_c)*ocg2(nu_c) * ilamc**bv_c
@@ -3462,6 +3580,15 @@
          qv1d(k) = MAX(1.E-10, qv1d(k) + qvten(k)*DT)
          qc1d(k) = qc1d(k) + qcten(k)*DT
          nc1d(k) = MAX(2./rho(k), nc1d(k) + ncten(k)*DT)
+         nc(k) = MAX(2., (nc1d(k) + ncten(k)*DT)*rho(k))
+      enddo
+
+      do k = kts, kte
+         
+         
+         
+         
+         
          nwfa1d(k) = MAX(11.1E6/rho(k), MIN(9999.E6/rho(k),             &
                        (nwfa1d(k)+nwfaten(k)*DT)))
          nifa1d(k) = MAX(naIN1*0.01, MIN(9999.E6/rho(k),                &
@@ -3471,8 +3598,18 @@
            qc1d(k) = 0.0
            nc1d(k) = 0.0
          else
-           nu_c = MIN(15, NINT(1000.E6/(nc1d(k)*rho(k))) + 2)
+            
+
+            if (k>10) then
+               nu_c = MIN(15, NINT(1000.E6/nc(k)) + 2)
+            else
+               nu_c = min(15, nint(1./(0.4-0.2*(nc(k)/maxval(nc)))**2))
+
+            endif
+
+           
            lamc = (am_r*ccg(2,nu_c)*ocg1(nu_c)*nc1d(k)/qc1d(k))**obmr
+
            xDc = (bm_r + nu_c + 1.) / lamc
            if (xDc.lt. D0c) then
             lamc = cce(2,nu_c)/D0c
@@ -3481,6 +3618,7 @@
            endif
            nc1d(k) = MIN(ccg(1,nu_c)*ocg2(nu_c)*qc1d(k)/am_r*lamc**bm_r,&
                          DBLE(Nt_c_max)/rho(k))
+
          endif
 
          qi1d(k) = qi1d(k) + qiten(k)*DT
@@ -3570,13 +3708,13 @@
             INQUIRE(63,opened=lopen)
             IF (lopen) THEN
               IF( force_read_thompson ) THEN
-                CALL wrf_error_fatal3("<stdin>",3573,&
+                CALL wrf_error_fatal3("<stdin>",3711,&
 "Error reading qr_acr_qg.dat. Aborting because force_read_thompson is .true.")
               ENDIF
               CLOSE(63)
             ELSE
               IF( force_read_thompson ) THEN
-                CALL wrf_error_fatal3("<stdin>",3579,&
+                CALL wrf_error_fatal3("<stdin>",3717,&
 "Error opening qr_acr_qg.dat. Aborting because force_read_thompson is .true.")
               ENDIF
             ENDIF
@@ -3588,7 +3726,7 @@
           ENDIF
         ELSE
           IF( force_read_thompson ) THEN
-            CALL wrf_error_fatal3("<stdin>",3591,&
+            CALL wrf_error_fatal3("<stdin>",3729,&
 "Non-existent qr_acr_qg.dat. Aborting because force_read_thompson is .true.")
           ENDIF
         ENDIF
@@ -3700,7 +3838,7 @@
           CLOSE(63)
           RETURN    
  9234     CONTINUE
-          CALL wrf_error_fatal3("<stdin>",3703,&
+          CALL wrf_error_fatal3("<stdin>",3841,&
 "Error writing qr_acr_qg.dat")
         ENDIF
       ENDIF
@@ -3760,13 +3898,13 @@
             INQUIRE(63,opened=lopen)
             IF (lopen) THEN
               IF( force_read_thompson ) THEN
-                CALL wrf_error_fatal3("<stdin>",3763,&
+                CALL wrf_error_fatal3("<stdin>",3901,&
 "Error reading qr_acr_qs.dat. Aborting because force_read_thompson is .true.")
               ENDIF
               CLOSE(63)
             ELSE
               IF( force_read_thompson ) THEN
-                CALL wrf_error_fatal3("<stdin>",3769,&
+                CALL wrf_error_fatal3("<stdin>",3907,&
 "Error opening qr_acr_qs.dat. Aborting because force_read_thompson is .true.")
               ENDIF
             ENDIF
@@ -3778,7 +3916,7 @@
           ENDIF
         ELSE
           IF( force_read_thompson ) THEN
-            CALL wrf_error_fatal3("<stdin>",3781,&
+            CALL wrf_error_fatal3("<stdin>",3919,&
 "Non-existent qr_acr_qs.dat. Aborting because force_read_thompson is .true.")
           ENDIF
         ENDIF
@@ -3978,7 +4116,7 @@
           CLOSE(63)
           RETURN    
  9234     CONTINUE
-          CALL wrf_error_fatal3("<stdin>",3981,&
+          CALL wrf_error_fatal3("<stdin>",4119,&
 "Error writing qr_acr_qs.dat")
         ENDIF
       ENDIF
@@ -4032,13 +4170,13 @@
             INQUIRE(63,opened=lopen)
             IF (lopen) THEN
               IF( force_read_thompson ) THEN
-                CALL wrf_error_fatal3("<stdin>",4035,&
+                CALL wrf_error_fatal3("<stdin>",4173,&
 "Error reading freezeH2O.dat. Aborting because force_read_thompson is .true.")
               ENDIF
               CLOSE(63)
             ELSE
               IF( force_read_thompson ) THEN
-                CALL wrf_error_fatal3("<stdin>",4041,&
+                CALL wrf_error_fatal3("<stdin>",4179,&
 "Error opening freezeH2O.dat. Aborting because force_read_thompson is .true.")
               ENDIF
             ENDIF
@@ -4050,7 +4188,7 @@
           ENDIF
         ELSE
           IF( force_read_thompson ) THEN
-            CALL wrf_error_fatal3("<stdin>",4053,&
+            CALL wrf_error_fatal3("<stdin>",4191,&
 "Non-existent freezeH2O.dat. Aborting because force_read_thompson is .true.")
           ENDIF
         ENDIF
@@ -4146,7 +4284,7 @@
           CLOSE(63)
           RETURN    
  9234     CONTINUE
-          CALL wrf_error_fatal3("<stdin>",4149,&
+          CALL wrf_error_fatal3("<stdin>",4287,&
 "Error writing freezeH2O.dat")
         ENDIF
       ENDIF
@@ -4495,7 +4633,7 @@
       ENDIF
       CALL wrf_dm_bcast_bytes ( iunit_mp_th1 , 4 )
       IF ( iunit_mp_th1 < 0 ) THEN
-        CALL wrf_error_fatal3("<stdin>",4498,&
+        CALL wrf_error_fatal3("<stdin>",4636,&
 'module_mp_thompson: table_ccnAct: '//   &
            'Can not find unused fortran unit to read in lookup table.')
       ENDIF
@@ -4515,12 +4653,12 @@
       RETURN
  9009 CONTINUE
       WRITE( errmess , '(A,I2)' ) 'module_mp_thompson: error opening CCN_ACTIVATE.BIN on unit ',iunit_mp_th1
-      CALL wrf_error_fatal3("<stdin>",4518,&
+      CALL wrf_error_fatal3("<stdin>",4656,&
 errmess)
       RETURN
  9010 CONTINUE
       WRITE( errmess , '(A,I2)' ) 'module_mp_thompson: error reading CCN_ACTIVATE.BIN on unit ',iunit_mp_th1
-      CALL wrf_error_fatal3("<stdin>",4523,&
+      CALL wrf_error_fatal3("<stdin>",4661,&
 errmess)
 
       end subroutine table_ccnAct

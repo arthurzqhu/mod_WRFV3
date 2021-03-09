@@ -44,3 +44,5 @@ mpi_job.*
 freezeH2O.dat
 .vscode/*
 .DS_store
+*.swp
+*.swo

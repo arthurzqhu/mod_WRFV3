@@ -1,6 +1,6 @@
  &TIME_CONTROL
- RUN_DAYS        =           0,
- RUN_HOURS       =           5,
+ RUN_DAYS        =           6,
+ RUN_HOURS       =           0,
  RUN_MINUTES     =           0,
  RUN_SECONDS     =           0,
  START_YEAR      = 3*2005, 8*1993,
@@ -1307,7 +1307,7 @@
  HISTORY_INTERVAL        = 3*360, 8*0,
  FRAMES_PER_OUTFILE      = 3*1, 8*10,
  RESTART = F,
- RESTART_INTERVAL        =        5000,
+ RESTART_INTERVAL        =        1000,
  IO_FORM_INPUT   =           2,
  IO_FORM_HISTORY =           2,
  IO_FORM_RESTART =           2,
